@@ -155,12 +155,40 @@ class ELU():
         return np.where(x >= 0.0, 1, np.exp(x) * self.alpha)
 
 
+class Mish():
+    """Mish activations functions"""
+
+    def __init__(self):
+        """"""
+        pass
+
+    def __call__(self, x):
+        """
+
+        :param x:
+        :return:
+        """
+        # same expression
+        # result = x * ((1 + np.exp(x))**2 - 1) / ((1 + np.exp(x))**2 + 1)
+        return x * np.tanh(np.log(1+np.exp(x)))
+
+    # TODO: 暂时不求导
+    def gradient(self, x):
+        """
+
+        :param x:
+        :return:
+        """
+        pass
+
+
 dict_activations = {
     'Sigmoid': Sigmoid,
     'Tanh': Tanh,
     'ReLU': ReLU,
     'LeakyReLu': LeakyReLu,
-    'ELU': ELU
+    'ELU': ELU,
+    "Mish": Mish
 }
 
 
@@ -188,16 +216,17 @@ if __name__ == '__main__':
     mpl.use("TkAgg")
 
     # Get data
-    x = np.linspace(-10, 10, 1000)
+    x = np.linspace(-10, 10, 100)
 
     # TODO: ['Sigmoid', "Tanh", "ReLU", "LeakyReLu", "ELU"]
     # 注意使用LeakReLU和ELU时，可以自定义参数
-    activation_name = "ELU"
+    activation_name = "ReLU"
     activation = dict_activations[activation_name]()
 
     # Froward & Backward
     forward_result = activation(x)
     backward_result = activation.gradient(x)
+    backward_result_1 = x * ((1 + np.exp(x))**2 - 1) / ((1 + np.exp(x))**2 + 1)
 
     # Plot
     fig = plt.figure(figsize=(16, 6))
