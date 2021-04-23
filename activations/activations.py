@@ -182,13 +182,102 @@ class Mish():
         pass
 
 
+class Exp():
+    """Exponential activations"""
+    def __init__(self):
+        pass
+
+    def __call__(self, x):
+        return np.exp(x)
+
+    def gradient(self, x):
+
+        return np.exp(x)
+
+
+class Softsign():
+    """Softsign activation function"""
+    def __init__(self):
+        pass
+
+    def __call__(self, x):
+        """
+
+        :param x:
+        :return:
+        """
+        return x / (np.abs(x) + 1)
+
+    def gradient(self, x):
+        """
+
+        :param x:
+        :return:
+        """
+        return 1 / (1 + np.abs(x))**2
+
+
+class Softplus():
+    """Softplus activation function"""
+    def __init__(self):
+        """
+
+        """
+        pass
+
+    def __call__(self, x):
+        """
+
+        :param x:
+        :return:
+        """
+        return np.log(1 + np.exp(x))
+
+    def gradient(self, x):
+        """
+
+        :param x:
+        :return:
+        """
+        return np.exp(x) / (1 + np.exp(x))
+
+
+class Swith():
+    """swith activation function"""
+    def __init__(self):
+        """
+
+        """
+        pass
+
+    def __call__(self, x):
+        """
+
+        :param x:
+        :return:
+        """
+        return x / (1 + np.exp(-x))
+
+    def gradient(self, x):
+        """
+
+        :param x:
+        :return:
+        """
+        return (1 - np.exp(-x) + x * np.exp(-x)) / (1 + np.exp(-x))**2
+
+
 dict_activations = {
     'Sigmoid': Sigmoid,
     'Tanh': Tanh,
     'ReLU': ReLU,
     'LeakyReLu': LeakyReLu,
     'ELU': ELU,
-    "Mish": Mish
+    "Mish": Mish,
+    "Exp": Exp,
+    "Softsign": Softsign,
+    "Softplus": Softplus,
+    "Swith": Swith
 }
 
 
@@ -218,15 +307,14 @@ if __name__ == '__main__':
     # Get data
     x = np.linspace(-10, 10, 100)
 
-    # TODO: ['Sigmoid', "Tanh", "ReLU", "LeakyReLu", "ELU"]
+    # TODO: ['Sigmoid', "Tanh", "ReLU", "LeakyReLu", "ELU", "Mish", "Exp", "Softsign", "Softplus", "Swith"]
     # 注意使用LeakReLU和ELU时，可以自定义参数
-    activation_name = "ReLU"
+    activation_name = "Swith"
     activation = dict_activations[activation_name]()
 
     # Froward & Backward
     forward_result = activation(x)
     backward_result = activation.gradient(x)
-    backward_result_1 = x * ((1 + np.exp(x))**2 - 1) / ((1 + np.exp(x))**2 + 1)
 
     # Plot
     fig = plt.figure(figsize=(16, 6))
