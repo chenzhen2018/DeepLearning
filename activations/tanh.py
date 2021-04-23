@@ -14,7 +14,7 @@ class Tanh:
     This class models an artificial neuraon with tanh activation function.
     """
 
-    def __int__(self):
+    def __init__(self):
         """
         Initialize weights based on input arguments
         :return:

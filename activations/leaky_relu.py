@@ -6,21 +6,22 @@ import copy
 import numpy as np
 
 """
-ReLU Activation
+Leaky ReLU Activation
 """
 
 
-class ReLU:
+class LeakyReLu():
     """
-    This class models an artificial neuraon with relu activation function.
+    This class models an artificial neuraon with leaky ReLU activation function.
     """
 
-    def __init__(self):
+    def __init__(self, alpha):
         """
         Initialize weights based on input arguments
+        :param alpha:
         :return:
         """
-        pass
+        self.alpha = alpha
 
     def activation(self, values):
         """
@@ -28,8 +29,7 @@ class ReLU:
         :param values:
         :return:
         """
-        result = np.maximum(values, 0)
-        return result
+        return np.where(values >= 0.0, values, self.alpha * values)
 
     def derivate(self, values):
         """
@@ -37,10 +37,7 @@ class ReLU:
         :param values:
         :return:
         """
-        result = copy.deepcopy(values)
-        result[result <= 0.0] = 0
-        result[result > 0.0] = 1
-        return result
+        return np.where(values >= 0.0, 1, self.alpha)
 
 
 def plot_xy(fig, pos):
@@ -66,7 +63,7 @@ def test():
     """
     x = np.linspace(-10, 10, 1000)
 
-    relu = ReLU()
+    relu = LeakyReLu(0.02)
 
     forward_result = relu.activation(x)
     backward_result = relu.derivate(x)
@@ -76,12 +73,12 @@ def test():
     # fig = plt.figure(figsize=(8, 6))
     plot_xy(fig, 121)
     plt.plot(x, forward_result)
-    plt.legend(["relu"])
+    plt.legend(["leaky relu"])
 
     # fig = plt.figure(figsize=(8, 6))
     plot_xy(fig, 122)
     plt.plot(x, backward_result)
-    plt.legend(["derivate relu"])
+    plt.legend(["derivate leaky relu"])
 
     plt.show()
 

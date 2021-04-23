@@ -14,7 +14,7 @@ class Sigmoid:
     This class models an artificial neuraon with sigmoid activation function.
     """
 
-    def __int__(self):
+    def __init__(self):
         """
         Initialize weights based on input arguments
         :return:
