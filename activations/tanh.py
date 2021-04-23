@@ -5,7 +5,7 @@
 import numpy as np
 
 """
-Sigmoid Activation
+Tanh Activation
 """
 
 
