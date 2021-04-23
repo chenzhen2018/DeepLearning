@@ -4,6 +4,10 @@
 
 import numpy as np
 
+"""
+Sigmoid Activation
+"""
+
 
 class Sigmoid:
     """
